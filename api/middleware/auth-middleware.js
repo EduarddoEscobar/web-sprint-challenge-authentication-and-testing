@@ -2,17 +2,7 @@ const Users = require('../users/users-model');
 
 async function usernameFree(req, res, next) {
     const {username} = req.body;
-     let user = await Users.getBy({username});
-     if(!user){
-        next({status: 400, customMessage: 'username taken'});
-     }else{
-        next();
-     }
-}
-
-async function usernameExists(req, res, next) {
-    const {username} = req.body;
-     let user = await Users.getBy({username});
+     let user = await Users.getByUsername(username);
      if(!user){
         next();
      }else{
@@ -31,6 +21,5 @@ async function checkPayload(req, res, next) {
 
 module.exports = {
     usernameFree,
-    usernameExists,
     checkPayload
 }

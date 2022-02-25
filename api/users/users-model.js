@@ -13,7 +13,7 @@ function getByUsername(username){
 }
 
 async function insert(user){
-    let [id] = db('users').insert(user);
+    let [id] = await db('users').insert(user);
     return getById(id);
 }
 
