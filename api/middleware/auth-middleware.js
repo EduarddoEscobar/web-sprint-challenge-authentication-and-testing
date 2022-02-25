@@ -10,6 +10,16 @@ async function usernameFree(req, res, next) {
      }
 }
 
+async function usernameExists(req, res, next) {
+    const {username} = req.body;
+     let user = await Users.getBy({username});
+     if(!user){
+        next();
+     }else{
+        next({status: 400, customMessage: 'username taken'});
+     }
+}
+
 async function checkPayload(req, res, next) {
     const {username, password} = req.body;
     if(username && password && username.trim() && password.trim()){
@@ -21,5 +31,6 @@ async function checkPayload(req, res, next) {
 
 module.exports = {
     usernameFree,
+    usernameExists,
     checkPayload
 }
