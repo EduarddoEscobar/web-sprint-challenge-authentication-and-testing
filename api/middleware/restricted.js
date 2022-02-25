@@ -1,3 +1,7 @@
+const jwt = require('jsonwebtoken');
+const SECRET = process.env.SECRET || 'shh';
+
+
 module.exports = (req, res, next) => {
   next();
   /*

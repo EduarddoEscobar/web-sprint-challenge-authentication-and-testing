@@ -10,8 +10,8 @@ You are not allowed to collaborate during the sprint challenge.
 
 ## Project Setup
 
-- [ ] Run `npm install` to install your dependencies.
-- [ ] Build your database executing `npm run migrate`.
+- [x] Run `npm install` to install your dependencies.
+- [x] Build your database executing `npm run migrate`.
 - [ ] Run tests locally executing `npm test`.
 
 ## Project Instructions
@@ -54,6 +54,10 @@ Your finished project must include all of the following requirements (further in
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics.
 
 1. Differences between using _sessions_ or _JSON Web Tokens_ for authentication.
+    Sessions are stored on the server meaning you can destroy them when the logout endpoint is called but with JSON Web Tokens they are on the client meaning we can not destroy them from the server.
 2. What does `bcryptjs` do to help us store passwords in a secure manner?
+    bcryptjs helps us store passwords in a secure manner by hashing the password in a way that does not allow them to be unhashed 
 3. How are unit tests different from integration and end-to-end testing?
+    Unit tests are tests that verify that a single part of the application works as intended. Integration tests verify that several parts work together as intended. E2E tests are tests that behave like a user and usually makes sure the entire application works as intended.
 4. How does _Test Driven Development_ change the way we write applications and tests?
+    Test Driven Development changes the way we write applications by already having a guideline of how we want the application to work
