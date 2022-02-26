@@ -88,9 +88,9 @@ describe('makes sure all the endpoints work', () => {
     })
 
     test('[GET] /jokes responds with those awful dad jokes', async () => {
-      await request(server).post('/api/auth/register').send({username: 'Captain Marvel', password: 'foobar'});
-      let tokenResult = await request(server).post('/api/auth/login').send({username: 'Captain Marvel', password: 'foobar'});
-      let result = await request(server).get('/api/jokes').set({authorization: tokenResult.body.token});
+      await request(server).post('/api/auth/register').send({username: 'u', password: 'p'});
+      let login = await request(server).post('/api/auth/login').send({username: 'u', password: 'p'});
+      let result = await request(server).get('/api/jokes').set({authorization: login.body.token});
       expect(result.status).toBe(200);
       expect(result.body).toEqual(jokes);
     })
