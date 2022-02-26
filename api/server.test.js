@@ -1,6 +1,7 @@
 const db = require('../data/dbConfig');
 const server = require('./server');
 const request = require('supertest');
+const jokes = require('./jokes/jokes-data');
 
 beforeAll(async () => {
   await db.migrate.rollback();
@@ -67,11 +68,32 @@ describe('makes sure all the endpoints work', () => {
     test('[POST] /login responds with the welcome message and token on successful login', async () => {
       await request(server).post('/api/auth/register').send({username: 'Captain Marvel', password: 'foobar'});
       let result = await request(server).post('/api/auth/login').send({username: 'Captain Marvel', password: 'foobar'});
+      expect(result.status).toBe(200);
+      expect(result.body.message).toBe('welcome, Captain Marvel');
+      expect(result.body.token).toBeTruthy();
     })
   })
 
   describe('jokes router', () => {
+    test('[GET] /jokes responds with token required when there is no token in header', async () => {
+      let result = await request(server).get('/api/jokes');
+      expect(result.status).toBe(401);
+      expect(result.body.message).toBe('token required');
+    })
 
+    test('[GET] /jokes responds with token invalid when the token is not able to be verified', async () => {
+      let result = await request(server).get('/api/jokes').set({authorization: 'real token'});
+      expect(result.status).toBe(401);
+      expect(result.body.message).toBe('token invalid');
+    })
+
+    // test('[GET] /jokes responds with those awful dad jokes', async () => {
+    //   await request(server).get('/api/auth/register').send({username: 'u', password: 'p'});
+    //   let login = await request(server).get('/api/auth/login').send({username: 'u', password: 'p'});
+    //   let result = await request(server).get('/api/jokes').set({authorization: login.body.token});
+    //   expect(result.status).toBe(200);
+    //   expect(result.body).toEqual(jokes);
+    // })
   })
 
 })
